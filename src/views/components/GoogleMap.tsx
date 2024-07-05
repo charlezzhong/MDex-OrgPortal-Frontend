@@ -17,10 +17,11 @@ const center = {
 
 interface GoogleMapComponentProps {
   onSelectAddress: (address: Address) => void;
+  setErrorMessage: (errorMessage: string | null) => void; // Add setErrorMessage function prop
 }
 
 
-const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress }) => {
+const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress, setErrorMessage }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyDymiUX4BEEJUWTF3KpDQVeO1Z65twX6Hg", // Replace with your Google Maps API key
@@ -31,6 +32,9 @@ const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress
   const [marker, setMarker] = React.useState<google.maps.Marker | null>(null);
   const [geocoder, setGeocoder] = React.useState<google.maps.Geocoder | null>(null);
   const [buildingName, setBuildingName] = React.useState<string | undefined>(undefined); // State for buildingName
+  const [initLat, setInitLat] = React.useState<number | null>(null);
+  const [initLng, setInitLng] = React.useState<number | null>(null);
+  //const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const onLoad = React.useCallback(function callback(map: google.maps.Map) {
     setMap(map);
@@ -54,6 +58,17 @@ const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress
           const newPosition = marker.getPosition();
           const newLat = newPosition.lat();
           const newLng = newPosition.lng();
+
+          if (initLat && initLng) {
+            const latDiff = Math.abs(newLat - initLat);
+            const lngDiff = Math.abs(newLng - initLng);
+            
+            if (latDiff > 0.01 || lngDiff > 0.01) {
+              console.log('Dragged location is too far from the selected address.');
+              setErrorMessage('Dragged location is too far from the selected address.');
+              return;
+            }
+          }
           
           geocoder.geocode({ location: newPosition }, (results, status) => {
             if (status === 'OK' && results[0]) {
@@ -73,13 +88,14 @@ const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress
                 ...addressComponents,
               };
               onSelectAddress(newAddress);
+              setErrorMessage(null);
               console.log(newAddress);
             }
           });
         }
       });
     }
-  }, [marker, onSelectAddress]);
+  }, [marker, onSelectAddress, initLat, initLng]);
 
   const handlePlaceSelect = (place: google.maps.places.PlaceResult) => {
     if (map && place.geometry && place.geometry.location) {
@@ -110,8 +126,11 @@ const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress
         buildingName: place.name, // Add buildingName field
         ...addressComponents
       };
+      setInitLat(place.geometry.location.lat());
+      setInitLng(place.geometry.location.lng());
       setBuildingName(place.name); // Update the buildingName state
       onSelectAddress(address);
+      setErrorMessage(null);
       console.log("full google map result", place);
       console.log(address);
     }

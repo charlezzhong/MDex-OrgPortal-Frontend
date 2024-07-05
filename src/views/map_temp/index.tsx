@@ -14,8 +14,10 @@ const Home: React.FC = () => {
   const router = useRouter();
   //const [address, setAddress] = useState<any>(null);
   const [address, setAddress] = useState<Address | null>(null); // Use Address type
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
   const handleAddressSelect = (selectedAddress: Address) => {
     setAddress(selectedAddress);
+    setErrorMessage(null); // Clear error message when a new address is selected
   };
     
     const navigateToConfirmation = () => {
@@ -26,19 +28,24 @@ const Home: React.FC = () => {
       }
     };
   
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Where's your place located?</h1>
-      <div style={{ height: '500px', width: '100%' }}>
-        <GoogleMapComponent onSelectAddress={handleAddressSelect}/>
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Where's your place located?</h1>
+        <div style={{ position: 'relative', height: '500px', width: '100%' }}>
+          <GoogleMapComponent onSelectAddress={handleAddressSelect} setErrorMessage={setErrorMessage} /> 
+          {errorMessage && (
+            <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: 'white', padding: '10px', border: '1px solid red', borderRadius: '5px' }}>
+              {errorMessage}
+            </div>
+          )}
+        </div>
+        {address && !errorMessage &&(
+          <button onClick={navigateToConfirmation} style={{ marginTop: '20px', padding: '10px 20px' }} disabled={!!errorMessage}>
+            Next
+          </button>
+        )}
       </div>
-      {address && (
-        <button onClick={navigateToConfirmation} style={{ marginTop: '20px', padding: '10px 20px' }}>
-          Next
-        </button>
-      )}
-    </div>
-  );
-};
+    );
+  };
 
 export default Home;
