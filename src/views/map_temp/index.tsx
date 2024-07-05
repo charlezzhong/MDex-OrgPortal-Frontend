@@ -22,8 +22,8 @@ const Home: React.FC = () => {
     
     const navigateToConfirmation = () => {
       if (address) {
-        const { country, route, locality, administrative_area_level_1, postal_code } = address;
-        const query = `?country=${country}&route=${route}&locality=${locality}&administrative_area_level_1=${administrative_area_level_1}&postal_code=${postal_code}`;
+        const { country, route, locality, administrative_area_level_1, postal_code, lat, lng } = address;
+        const query = `?country=${country}&route=${route}&locality=${locality}&administrative_area_level_1=${administrative_area_level_1}&postal_code=${postal_code}&lat=${lat}&lng=${lng}`;
         router.push(`${path.map_temp.confirmation}${query}`);
       }
     };

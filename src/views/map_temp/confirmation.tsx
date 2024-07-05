@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 const Confirmation: React.FC = () => {
@@ -14,8 +14,30 @@ const Confirmation: React.FC = () => {
     searchParams.get('administrative_area_level_1') || null
   );
   const [postal_code, setPostalCode] = useState<string | null>(searchParams.get('postal_code') || null);
-
+  const [lat, setLat] = useState<string | null>(searchParams.get('lat') || null);
+  const [lng, setLng] = useState<string | null>(searchParams.get('lng') || null);
+  const [campus, setCampus] = useState<string | null>(null);
   // Function to handle changes in each input field
+  useEffect(() => {
+    const fetchCampusInfo = async () => {
+      console.log("lat at this time: ", lat);
+      console.log("lng at this time: ", lng);
+      if (lat && lng) {
+        try {
+          const response = await fetch(`http://localhost:3000/api/data?lat=${lat}&lng=${lng}`);
+          console.log(response);
+          const data = await response.json();
+          console.log(data);
+          setCampus(data.campus);
+        } catch (error) {
+          console.error('Error fetching campus info:', error);
+        }
+      }
+    };
+
+    fetchCampusInfo();
+  }, [lat, lng]);
+  
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string | null>>) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -67,6 +89,11 @@ const Confirmation: React.FC = () => {
           />
         </div>
       </form>
+      {campus && (
+        <div style={{ marginTop: '20px', fontSize: '1.2rem', fontWeight: 'bold' }}>
+          Campus: {campus}
+        </div>
+      )}
     </div>
   );
 };
