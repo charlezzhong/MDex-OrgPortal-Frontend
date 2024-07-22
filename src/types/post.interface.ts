@@ -14,6 +14,8 @@ export interface IPost {
     eventEndTime:             Date;
     eventLocation:            string;
     eventLocationDescription: string;
+    lat:                      string;
+    lng:                      string;
     verified:                 boolean;
     category:                 string;
     campus:                   string;

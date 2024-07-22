@@ -24,7 +24,7 @@ interface GoogleMapComponentProps {
 const GoogleMapComponent: React.FC<GoogleMapComponentProps> = ({ onSelectAddress, setErrorMessage }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyDymiUX4BEEJUWTF3KpDQVeO1Z65twX6Hg", // Replace with your Google Maps API key
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!,
     libraries: ['places'], // Specify the libraries that you need, e.g., places
   });
 

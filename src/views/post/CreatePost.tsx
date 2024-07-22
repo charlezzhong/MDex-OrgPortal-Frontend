@@ -37,6 +37,8 @@ interface IPost {
   eventEndTime: Date;
   eventLocation: string;
   eventLocationDescription: string;
+  lat:                      string;
+  lng:                      string;
   category: string;
   campus: string;
 }
@@ -183,6 +185,8 @@ export const CreatePost = () => {
       eventEndTime: new Date(),
       eventLocation: "",
       eventLocationDescription: "",
+      lat:"42.2804947",
+      lng:"-83.7401702",
       category: "",
       campus: "",
     } as IPost,
