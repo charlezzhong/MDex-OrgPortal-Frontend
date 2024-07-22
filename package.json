@@ -11,6 +11,8 @@
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.1.0",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
     "cookies-next": "^4.1.1",

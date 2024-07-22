@@ -21,14 +21,20 @@ const index = () => {
     const router = useRouter();
     const org = useSelector(state => state?.user?.organization)
 
+    const testOrgId = "669bea28422d685053f6da92"; 
     useEffect(() => {
-        if(org)
-            fetchPostData()
+        /*console.log("testing1");
+        if(org){
+          console.log("testing2");
+          fetchPostData()
+        }*/
+        fetchPostData();
     }, [org, selection])
    
     const fetchPostData = async(offset?:number,perpage?:number) => {
         try {
-          const postsData:any = await fetchPosts(org?._id!, {offset,perpage, category: selection == 0 ? 'upcoming' : 'past'}) 
+          const orgId = org?._id || testOrgId;
+          const postsData:any = await fetchPosts(orgId, {offset,perpage, category: selection == 0 ? 'upcoming' : 'past'}) 
           if(postsData){
             if(postsData?.posts){
                setPosts(postsData?.posts)

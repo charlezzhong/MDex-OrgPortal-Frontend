@@ -47,3 +47,12 @@ export const fetchRsvpsForPost = async (id:string) => {
         return null
     }
 }
+
+export const fetchPostSaves = async (postId: string) => {
+    try {
+      const res = await GET(`/api/v2/posts/post/${postId}/saves`);
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }

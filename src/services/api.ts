@@ -1,5 +1,5 @@
 import axios from "axios";
-import { decryptResponse, encryptPayload } from "./encrypt";
+//import { decryptResponse, encryptPayload } from "./encrypt";
 
 
 // interceptors
@@ -9,7 +9,7 @@ axios.interceptors.request.use(
       if (config.url && (config.url.includes("upload") || config.url.includes("/organization/create")) ) {
         return config;
       }
-      config.data = await encryptPayload(config.data);
+      //config.data = await encryptPayload(config.data);
     }
     return config;
   },
@@ -20,7 +20,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   async (response) => {
     if (response.data && response.data.iv) {
-      response.data = await decryptResponse(response.data);
+      //response.data = await decryptResponse(response.data);
     }
     return response;
   },

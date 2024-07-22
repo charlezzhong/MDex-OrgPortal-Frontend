@@ -198,8 +198,10 @@ export const CreatePost = () => {
       ...values,
       isNorth: values?.campus == "north",
       isCentral: values?.campus == "central",
-      organization: org?._id,
-      organizationName: org?.orgName,
+      //organization: org?._id,
+      organization: "669bea28422d685053f6da92",
+      //organizationName: org?.orgName,
+      organizationName: "Testing",
       eventDate: dayjs(values?.eventTime).format("MM/DD/YYYY"),
       eventTime: dayjs(values?.eventTime).format("HH:mm"),
       rsvpData: null,
@@ -254,7 +256,7 @@ export const CreatePost = () => {
                       borderRadius: '0.5rem',
                       border: '1px solid #ccc',
                       backgroundColor: '#ffffff',
-                      color: 'white'
+                      color: 'black'
                     }}
                     value={formik.values.title}
                     onChange={formik.handleChange}

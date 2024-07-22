@@ -2,9 +2,13 @@ const isLive = true;
 export const imgUrl = isLive
   ? "https://api.thisismdex.com"
   : "http://localhost:8000";
-const baseUrl = isLive
+/*const baseUrl = isLive
   ? "https://api.thisismdex.com/ipa"
-  : "http://localhost:8000/ipa";
+  : "http://localhost:5000/ipa/v2/testing";*/
+
+const baseUrl = isLive
+  ? "http://localhost:5000/ipa/v2/testing"
+  : "http://localhost:5000/ipa/v2/testing";
 
 export const urls = {
   organization: {
@@ -33,6 +37,7 @@ export const urls = {
     getPost: `${baseUrl}/org/postFeed`,
     getSinglePost: `${baseUrl}/postFeed`,
     getRsvps: `${baseUrl}/org/rsvps`,
+    index: `${baseUrl}/postFeed/summary`,
   },
   rsvp: {
     index: `${baseUrl}/rsvps`,
