@@ -122,8 +122,8 @@ const AdmissionSettings: React.FC<AdmissionSettingsProps> = ({ onClose, onDone, 
         </div>
         <div style={{justifyContent: 'space-between', display: 'flex' }}>
         {/* <button style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: 'gray', color: 'white' }} onClick={onClose}>Cancel</button> */}
-          <button style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: '#635bff', color: 'white', fontWeight: 'bold'}} onClick={handleCreateNewTicket}>Create New Ticket</button>
-          <button style={{ padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: 'white', color: 'black', fontWeight: 'bold' }} onClick={onDone}>Done</button>
+          <button type="button" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: '#635bff', color: 'white', fontWeight: 'bold'}} onClick={handleCreateNewTicket}>Create New Ticket</button>
+          <button type="button" style={{ padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: 'white', color: 'black', fontWeight: 'bold' }} onClick={onDone}>Done</button>
         </div>
       </div>
       {showAddEditTicket && <AddEditTicket onClose={() => setShowAddEditTicket(false)} isEdit={isEdit} ticketData={ticketData} onSave={handleSaveTicket} />}

@@ -41,6 +41,7 @@ interface IPost {
   lng:                      string;
   category: string;
   campus: string;
+
 }
 
 const validationSchema = Yup.object().shape({
@@ -191,10 +192,55 @@ export const CreatePost = () => {
       campus: "",
     } as IPost,
     // enableReinitialize:true,
-    onSubmit: (values) => {
+    /*onSubmit: (values) => {
       handleCreate(values);
+    },*/
+    onSubmit: async (values) => {
+      if (isSellingTickets) {
+        await createTicket(values, tickets);
+      } else {
+        await handleCreate(values);
+      }
     },
   });
+
+  const createTicket = async (postData: IPost, ticketData: Ticket[]) => {
+    const dataToSend = {
+      ...postData,
+      isNorth: postData?.campus == "north",
+      isCentral: postData?.campus == "central",
+      //organization: org?._id,
+      organization: "669bea28422d685053f6da92",
+      //organizationName: org?.orgName,
+      organizationName: "Testing",
+      eventDate: dayjs(postData?.eventTime).format("MM/DD/YYYY"),
+      eventTime: dayjs(postData?.eventTime).format("HH:mm"),
+      rsvpData: null,
+      tickets: ticketData,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/ipa/v2/testing/postFeed/ticket', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create ticket event');
+      }
+
+      const data = await response.json();
+      toast.success("Ticket event created successfully");
+      router.push(path.post.index);
+    } catch (error) {
+      console.error('Error creating ticket event:', error);
+      toast.error('Failed to create ticket event');
+    }
+  };
+
 
   const handleCreate = async (values: IPost) => {
 
@@ -232,6 +278,8 @@ export const CreatePost = () => {
       //console.log(error)
     }
   };
+
+
 
 
   return (

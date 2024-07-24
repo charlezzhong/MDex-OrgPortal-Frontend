@@ -350,8 +350,8 @@ const AddEditTicket: React.FC<AddEditTicketProps> = ({ onClose, isEdit = false, 
           )}
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: 'gray', color: 'white', fontWeight: 'bold' }} onClick={onClose}>Cancel</button>
-          <button onClick={handleSave} style={{
+          <button type="button" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', backgroundColor: 'gray', color: 'white', fontWeight: 'bold' }} onClick={onClose}>Cancel</button>
+          <button type="button" onClick={handleSave} style={{
                 backgroundColor: isSaveDisabled ? '#999' : '#635bff',
                 padding: '0.5rem 1rem',
                 borderRadius: '0.5rem',

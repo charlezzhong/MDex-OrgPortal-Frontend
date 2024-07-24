@@ -81,6 +81,7 @@ const TicketsComponent: React.FC<TicketsComponentProps> = ({ tickets, setTickets
             display: 'flex',
             alignItems: 'center'
           }}
+          type="button"
           onClick={handleEditTickets}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -99,7 +100,7 @@ const TicketsComponent: React.FC<TicketsComponentProps> = ({ tickets, setTickets
             </div>
             <button
               style={{ padding: '0.5rem', borderRadius: '100px', backgroundColor: 'white', borderColor: 'white', borderWidth: '1px', color: 'black' }}
-              onClick={() => handleEditTicket(ticket)}
+              type="button" onClick={() => handleEditTicket(ticket)}
             >
               <IoPencilSharp />
             </button>
