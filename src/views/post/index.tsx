@@ -34,7 +34,14 @@ const index = () => {
     const fetchPostData = async(offset?:number,perpage?:number) => {
         try {
           const orgId = org?._id || testOrgId;
-          const postsData:any = await fetchPosts(orgId, {offset,perpage, category: selection == 0 ? 'upcoming' : 'past'}) 
+
+          // Determine category based on selection
+          const categories = ['upcoming', 'past', 'upcoming_rsvp', 'past_rsvp', 'upcoming_ticket', 'past_ticket'];
+          const category = categories[selection] || 'upcoming';
+
+          const postsData: any = await fetchPosts(orgId, { offset, perpage, category });
+          //const postsData:any = await fetchPosts(orgId, {offset,perpage, category: selection == 0 ? 'upcoming' : 'past'}) 
+          //const postsData:any = await fetchPosts(orgId, {offset,perpage, category: selection == 0 ? 'upcoming' : 'past'}) 
           if(postsData){
             if(postsData?.posts){
                setPosts(postsData?.posts)
@@ -56,8 +63,12 @@ const index = () => {
         </div>
         <div className='mt-2'>
             <div className='flex gap-5 border-b border-black border-opacity-50 w-full'>
-                <p onClick={()=>setSelection(0)} className={`cursor-pointer ${selection == 0 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Upcoming</p>
-                <p onClick={()=>setSelection(1)} className={`cursor-pointer ${selection == 1 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Past</p>
+                <p onClick={()=>setSelection(0)} className={`cursor-pointer ${selection == 0 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Upcoming Overall</p>
+                <p onClick={()=>setSelection(1)} className={`cursor-pointer ${selection == 1 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Past Overall</p>
+                <p onClick={()=>setSelection(2)} className={`cursor-pointer ${selection == 2 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Upcoming RSVP</p>
+                <p onClick={()=>setSelection(3)} className={`cursor-pointer ${selection == 3 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Past RSVP</p>
+                <p onClick={()=>setSelection(4)} className={`cursor-pointer ${selection == 4 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Upcoming Ticket</p>
+                <p onClick={()=>setSelection(5)} className={`cursor-pointer ${selection == 5 ? 'border-b-2 border-[#635bff]': 'border-none'}`}>Past Ticket</p>
             </div>
             <div>
                 <PostsTable posts={posts} totalPosts={total} onPaginationChange={fetchPostData}/>

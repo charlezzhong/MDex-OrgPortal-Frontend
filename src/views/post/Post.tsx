@@ -24,7 +24,7 @@ const Tabs = {
     Registered : {
         Component: (rsvp:RsvpUsers[]) => <Rsvps rsvps={rsvp} />
     },
-    Registeration : {
+    Registration : {
         Component: (post:IPost) => <Registeration post={post} />
     },
 } as ITabs
@@ -51,7 +51,7 @@ const Post = ({post, rsvps}: Props) => {
         </div>
         {selectedTab == 'Overview' && Tabs[selectedTab].Component(post, rsvps.length)}
         {selectedTab == 'Registered' && Tabs[selectedTab].Component(rsvps)}
-        {selectedTab == 'Registeration' && Tabs[selectedTab].Component(post)}
+        {selectedTab == 'Registration' && Tabs[selectedTab].Component(post)}
     </div>
   )
 }
